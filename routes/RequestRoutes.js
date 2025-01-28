@@ -22,21 +22,36 @@ requestRoutes.post("/addrequest", async (req, res) => {
     });
     newRequest = await newRequest.save();
     signupUser(name, email, password);
-    sendMail(email, name, password)
+    sendMail(email, name, password);
     sendResponse(res, 200, newRequest, false, "Request Added Successfully");
   } catch (error) {
     sendResponse(res, 400, null, true, error.message);
   }
 });
 
-
-requestRoutes.get("/getAllRequests", async(req, res) => {
+requestRoutes.get("/getAllRequests", async (req, res) => {
   try {
-    const allRequests = await Requests.find()
-    sendResponse(res, 200, allRequests, false, "Requests Fetched Successfully")
+    const allRequests = await Requests.find();
+    sendResponse(res, 200, allRequests, false, "Requests Fetched Successfully");
   } catch (error) {
-    sendResponse(res, 400, null, true, "Error fetching Requests")
+    sendResponse(res, 400, null, true, "Error fetching Requests");
   }
-})
+});
+
+requestRoutes.get("/getUserRequests", async (req, res) => {
+  try {
+    const { email } = req.query;
+    const userRequests = await Requests.find({ email });
+    sendResponse(
+      res,
+      200,
+      userRequests,
+      false,
+      "User Requests Fetched Successfully"
+    );
+  } catch (error) {
+    sendResponse(res, 400, null, true, "Error fetching Requests");
+  }
+});
 
 export default requestRoutes;

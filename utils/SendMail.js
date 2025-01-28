@@ -4,16 +4,16 @@ export const sendMail = async (email, name, password) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "smitgulshancampus@gmail.com",
-      pass: "lmsforsmit010203040506",
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
     },
   });
 
   const mailOptions = {
-    from: "smitgulshancampus@gmail.com",
+    from: process.env.EMAIL,
     to: email,
     subject: "Welcome to Our App",
-    text: `Hi ${name},\n\nYour account has been created successfully!\n\nThank you for joining us!\n\n login with ${email} and ${password}`,
+    text: `Hi ${name},\n\nYour account has been created successfully!\n\nThank you for joining us!\n\n login with Email: ${email} and Password: ${password}`,
   };
 
   try {
